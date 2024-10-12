@@ -3,7 +3,7 @@ import { EpisodeList } from './components'
 
 export const SearchPage = () => {
   return (
-    <main className="p-4 flex flex-col items-stretch gap-8 sm:gap-12">
+    <main className="flex flex-col items-stretch gap-8 sm:gap-12">
       <Typography as="h1" className="text-left">
         Search for your favourite episodes
       </Typography>

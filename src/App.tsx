@@ -1,13 +1,13 @@
-import { SearchPage } from '@pages'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import './App.css'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router'
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SearchPage />
+      <RouterProvider router={router} />
     </QueryClientProvider>
   )
 }
