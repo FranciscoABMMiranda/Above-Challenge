@@ -14,8 +14,13 @@ export const EpisodeList: React.FC = () => {
       <section className="flex flex-col gap-5">
         <SkeletonWrapper component={<EpisodeListSkeleton />}>
           {data !== undefined &&
-            data.map(({ title, description }) => (
-              <EpisodeCard title={title} description={description} />
+            data.map(({ id, title, description }) => (
+              <EpisodeCard
+                key={id}
+                id={id}
+                title={title}
+                description={description}
+              />
             ))}
         </SkeletonWrapper>
       </section>

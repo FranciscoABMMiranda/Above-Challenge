@@ -11,8 +11,6 @@ const LIST_EPISODES_QUERY = gql`
       description
       seasonNumber
       episodeNumber
-      releaseDate
-      imdbId
     }
   }
 `
