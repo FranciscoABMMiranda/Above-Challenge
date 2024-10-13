@@ -53,9 +53,9 @@ jobs:
       - name: Build
         run: |
           echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
-          echo "VITE_GRAPHQL_API_URL=${{ secrets.REACT_APP_API_KEY }}" >> .env
-          echo "VITE_IMDB_API_KEY=${{ secrets.REACT_APP_API_KEY }}" >> .env
-          echo "VITE_WEBSOCKET_URL=${{ secrets.REACT_APP_API_KEY }}" >> .env
+          echo "VITE_GRAPHQL_API_URL=${{ secrets.VITE_GRAPHQL_API_URL }}" >> .env
+          echo "VITE_IMDB_API_KEY=${{ secrets.VITE_IMDB_API_KEY }}" >> .env
+          echo "VITE_WEBSOCKET_URL=${{ secrets.VITE_WEBSOCKET_URL }}" >> .env
           npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
