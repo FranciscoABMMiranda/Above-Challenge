@@ -1,4 +1,5 @@
 export * from './graphqlClient'
+export * from './queryClient'
 export * from './queryKeys'
 export * from './requestHeaders'
 export * from './urls'

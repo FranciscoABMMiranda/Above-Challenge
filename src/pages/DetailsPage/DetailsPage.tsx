@@ -1,9 +1,9 @@
 import { StarFilled } from '@ant-design/icons'
 import {
-  ModalProvider,
   SkeletonProvider,
   SkeletonWrapper,
   Typography,
+  useModal,
 } from '@components'
 import { useEpisodeDetails, useImdbDetails } from '@services'
 import React from 'react'
@@ -14,6 +14,7 @@ import { getEpisodeInfo } from './utils'
 
 export const DetailsPage: React.FC = () => {
   const { pathname } = useLocation()
+  const { closeModal } = useModal()
 
   const { data, isLoading, isError } = useEpisodeDetails({
     episodeId: pathname.substring(1),
@@ -28,55 +29,56 @@ export const DetailsPage: React.FC = () => {
     enabled: !(isLoading || data?.imdbId === undefined),
   })
 
-  console.log({ data, imdbData })
+  const handleUpdateSuccess = () => {
+    alert('Episode updated successfully!')
+    closeModal()
+  }
 
   if (isError || isImdbError) return null
 
   return (
     <SkeletonProvider isLoading={isLoading || isImdbLoading}>
-      <ModalProvider>
-        <EpisodeModal />
-        <main className="flex flex-col items-start gap-y-6">
-          <HeaderButtons />
-          <SkeletonWrapper component={<DetailsSkeleton />}>
-            <section className="flex flex-col md:flex-row justify-between items-start gap-y-4 gap-x-2 w-full">
-              <div className="flex flex-col gap-y-5 items-start">
-                <Typography as="h1">{data?.title}</Typography>
-                <Typography as="h2" className="text-2xl">
-                  {`Series: ${data?.series}`}
-                </Typography>
-                <div className="flex flex-col gap-y-2 flex-wrap text-lg">
-                  {getEpisodeInfo(data, imdbData).map(
-                    ({ label, value }, index) => (
-                      <InfoText
-                        key={`episode_info_${index}`}
-                        label={label}
-                        value={value}
-                      />
-                    ),
-                  )}
-                  <InfoText
-                    label="IMDB rating"
-                    value={
-                      <>
-                        {`${imdbData?.imdbRating}/10`}
-                        <StarFilled className="ml-1" />
-                      </>
-                    }
-                  />
-                </div>
+      <EpisodeModal isEdit onSuccess={handleUpdateSuccess} />
+      <main className="flex flex-col items-start gap-y-6">
+        <HeaderButtons episodeId={data?.id ?? ''} />
+        <SkeletonWrapper component={<DetailsSkeleton />}>
+          <section className="flex flex-col md:flex-row justify-between items-start gap-y-4 gap-x-2 w-full">
+            <div className="flex flex-col gap-y-5 items-start">
+              <Typography as="h1">{data?.title}</Typography>
+              <Typography as="h2" className="text-2xl">
+                {`Series: ${data?.series}`}
+              </Typography>
+              <div className="flex flex-col gap-y-2 flex-wrap text-lg">
+                {getEpisodeInfo(data, imdbData).map(
+                  ({ label, value }, index) => (
+                    <InfoText
+                      key={`episode_info_${index}`}
+                      label={label}
+                      value={value}
+                    />
+                  ),
+                )}
+                <InfoText
+                  label="IMDB rating"
+                  value={
+                    <>
+                      {`${imdbData?.imdbRating}/10`}
+                      <StarFilled className="ml-1" />
+                    </>
+                  }
+                />
               </div>
-              <img
-                className="w-full md:w-[40%]"
-                src={imdbData?.Poster}
-                alt={`Poster of the episode`}
-              />
-            </section>
+            </div>
+            <img
+              className="w-full md:w-[40%]"
+              src={imdbData?.Poster}
+              alt={`Poster of the episode`}
+            />
+          </section>
 
-            <Typography>{data?.description}</Typography>
-          </SkeletonWrapper>
-        </main>
-      </ModalProvider>
+          <Typography>{data?.description}</Typography>
+        </SkeletonWrapper>
+      </main>
     </SkeletonProvider>
   )
 }

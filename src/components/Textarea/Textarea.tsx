@@ -1,17 +1,15 @@
-import { SearchOutlined } from '@ant-design/icons'
 import React, { useId } from 'react'
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string
-  isSearch?: boolean
   fullWidth?: boolean
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Textarea: React.FC<TextareaProps> = ({
   label,
   className,
   fullWidth = false,
-  isSearch = false,
   ...remainingProps
 }) => {
   const labelId = useId()
@@ -21,11 +19,8 @@ export const Input: React.FC<InputProps> = ({
       className={`flex flex-col items-start gap-2 ${
         fullWidth ? 'w-full' : ''
       }`}>
-      <label id={labelId}>
-        {isSearch && <SearchOutlined className="mr-2" />}
-        {label}
-      </label>
-      <input
+      <label id={labelId}>{label}</label>
+      <textarea
         className={`text-lg p-2 rounded-md ${
           fullWidth ? 'w-full' : ''
         } ${className}`}
