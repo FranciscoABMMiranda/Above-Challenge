@@ -1,11 +1,11 @@
 import { useQuery } from 'react-query'
-import { getEpisodeList } from '../api'
+import { getEpisodeList, GetEpisodeListParams } from '../api'
 import { EPISODE_LIST } from '../utils'
 
-export const useEpisodeList = () => {
+export const useEpisodeList = ({ search }: GetEpisodeListParams) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: [EPISODE_LIST],
-    queryFn: getEpisodeList,
+    queryKey: [EPISODE_LIST, search],
+    queryFn: () => getEpisodeList({ search }),
   })
 
   return { data, isLoading, isError }

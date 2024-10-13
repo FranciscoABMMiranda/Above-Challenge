@@ -15,8 +15,12 @@ const LIST_EPISODES_QUERY = gql`
   }
 `
 
-export const getEpisodeList = async () => {
-  const variables = { search: '' }
+export interface GetEpisodeListParams {
+  search: string
+}
+
+export const getEpisodeList = async ({ search }: GetEpisodeListParams) => {
+  const variables = { search }
   const data = await graphqlClient.request<EpisodeList>(
     LIST_EPISODES_QUERY,
     variables,

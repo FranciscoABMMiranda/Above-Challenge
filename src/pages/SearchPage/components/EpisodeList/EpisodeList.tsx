@@ -4,8 +4,12 @@ import React from 'react'
 import { EpisodeCard } from '../EpisodeCard'
 import { EpisodeListSkeleton } from './EpisodeListSkeleton'
 
-export const EpisodeList: React.FC = () => {
-  const { data, isLoading, isError } = useEpisodeList()
+interface EpisodeListProps {
+  search: string
+}
+
+export const EpisodeList: React.FC<EpisodeListProps> = ({ search }) => {
+  const { data, isLoading, isError } = useEpisodeList({ search })
 
   if (isError) return null
 
