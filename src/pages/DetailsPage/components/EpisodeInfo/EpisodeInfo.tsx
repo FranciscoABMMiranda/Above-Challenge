@@ -12,7 +12,7 @@ interface EpisodeInfoProps {
 
 export const EpisodeInfo: React.FC<EpisodeInfoProps> = ({ data, imdbData }) => {
   return (
-    <section className="flex flex-col gap-y-6">
+    <section className="flex flex-col gap-y-6 w-full">
       <section className="flex flex-col md:flex-row justify-between items-start gap-y-4 gap-x-2 w-full">
         <div className="flex flex-col gap-y-5 items-start">
           <Typography as="h1">{data.title}</Typography>
