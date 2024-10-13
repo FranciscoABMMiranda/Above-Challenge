@@ -9,4 +9,6 @@ To run this project:
 3. Run dev - `yarn run dev`
 4. Open localhost - http://localhost:5173/
 
+You can also check my project in the following url: https://franciscoabmmiranda.github.io/Above-Challenge/
+
 Mockups can be found in /wireframes/searchPage.png
