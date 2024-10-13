@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/Above-Challenge',
+  base: '/Above-Challenge/',
   resolve: {
     alias: {
       '@components': '/src/components',

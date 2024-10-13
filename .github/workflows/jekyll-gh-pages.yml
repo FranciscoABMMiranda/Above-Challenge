@@ -51,7 +51,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: npm run build
+        run: |
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
+          echo "VITE_GRAPHQL_API_URL=${{ secrets.REACT_APP_API_KEY }}" >> .env
+          echo "VITE_IMDB_API_KEY=${{ secrets.REACT_APP_API_KEY }}" >> .env
+          echo "VITE_WEBSOCKET_URL=${{ secrets.REACT_APP_API_KEY }}" >> .env
+          npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
