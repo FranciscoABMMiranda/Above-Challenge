@@ -1,15 +1,20 @@
 import { Button, Input, Textarea } from '@components'
-import { useCreateEpisode } from '@services'
+import { EpisodeDetails } from '@services'
 import { getId } from '@utils'
 import React, { useRef } from 'react'
 
-interface EpisodeFormProps {
-  onSuccess: () => void
+export interface EpisodeFormProps {
+  isEdit?: boolean
+  data?: EpisodeDetails
+  onSubmitData: (episode: EpisodeDetails) => void
 }
 
-export const EpisodeForm: React.FC<EpisodeFormProps> = ({ onSuccess }) => {
+export const EpisodeForm: React.FC<EpisodeFormProps> = ({
+  isEdit = false,
+  data,
+  onSubmitData,
+}) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { mutate } = useCreateEpisode({ onSuccess })
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,7 +29,7 @@ export const EpisodeForm: React.FC<EpisodeFormProps> = ({ onSuccess }) => {
     const imdbId = formData.get('imdbId') as string
     const description = formData.get('description') as string
 
-    mutate({
+    onSubmitData({
       id: getId(),
       series,
       title,
@@ -41,8 +46,20 @@ export const EpisodeForm: React.FC<EpisodeFormProps> = ({ onSuccess }) => {
       ref={formRef}
       onSubmit={onSubmit}
       className="flex flex-col gap-4 w-full items-stretch">
-      <Input label="Series" name="series" required fullWidth />
-      <Input label="Episode Title" name="title" required fullWidth />
+      <Input
+        label="Series"
+        name="series"
+        required
+        fullWidth
+        defaultValue={data?.series}
+      />
+      <Input
+        label="Episode Title"
+        name="title"
+        required
+        fullWidth
+        defaultValue={data?.title}
+      />
       <div className="flex gap-4">
         <Input
           label="Season number"
@@ -50,6 +67,7 @@ export const EpisodeForm: React.FC<EpisodeFormProps> = ({ onSuccess }) => {
           required
           type="number"
           fullWidth
+          defaultValue={data?.seasonNumber}
         />
         <Input
           label="Episode number"
@@ -57,14 +75,33 @@ export const EpisodeForm: React.FC<EpisodeFormProps> = ({ onSuccess }) => {
           required
           type="number"
           fullWidth
+          defaultValue={data?.episodeNumber}
         />
       </div>
       <div className="flex gap-4">
-        <Input label="Release date" name="releaseDate" fullWidth type="date" />
-        <Input label="IMDB ID" name="imdbId" fullWidth />
+        <Input
+          label="Release date"
+          name="releaseDate"
+          fullWidth
+          type="date"
+          defaultValue={data?.releaseDate}
+        />
+        <Input
+          label="IMDB ID"
+          name="imdbId"
+          fullWidth
+          defaultValue={data?.imdbId}
+        />
       </div>
-      <Textarea label="Description" name="description" fullWidth />
-      <Button type="submit">Create episode</Button>
+      <Textarea
+        label="Description"
+        name="description"
+        fullWidth
+        defaultValue={data?.description}
+      />
+      <Button type="submit">
+        {isEdit ? 'Update episode' : 'Create episode'}
+      </Button>
     </form>
   )
 }

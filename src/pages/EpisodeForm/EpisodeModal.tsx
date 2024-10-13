@@ -1,15 +1,11 @@
 import { Modal, useModal } from '@components'
 import React from 'react'
-import { EpisodeForm } from './EpisodeForm'
+import { EpisodeForm, EpisodeFormProps } from './EpisodeForm'
 
-interface EpisodeModalProps {
-  onSuccess: () => void
-  isEdit?: boolean
-}
-
-export const EpisodeModal: React.FC<EpisodeModalProps> = ({
+export const EpisodeModal: React.FC<EpisodeFormProps> = ({
   isEdit,
-  onSuccess,
+  data,
+  onSubmitData,
 }) => {
   const { open, closeModal } = useModal()
 
@@ -19,7 +15,7 @@ export const EpisodeModal: React.FC<EpisodeModalProps> = ({
       onClose={closeModal}
       title={isEdit ? 'Edit this episode' : 'Add an episode'}
       className="md:px-8 py-4">
-      <EpisodeForm onSuccess={onSuccess} />
+      <EpisodeForm isEdit={isEdit} onSubmitData={onSubmitData} data={data} />
     </Modal>
   )
 }

@@ -17,5 +17,6 @@ export const deleteEpisode = async ({ episodeId }: DeleteEpisodeParams) => {
     DELETE_EPISODE_MUTATION,
     variables,
   )
+
   return response.deleteEpisode
 }

@@ -2,9 +2,9 @@ import { gql } from 'graphql-request'
 import { EpisodeDetails } from '../models'
 import { graphqlClient } from '../utils'
 
-const CREATE_EPISODE_MUTATION = gql`
-  mutation CreateEpisode($episode: EpisodeInput!) {
-    createEpisode(episode: $episode) {
+const UPDATE_EPISODE_MUTATION = gql`
+  mutation UpdateEpisode($episode: UpdateEpisodeInput!) {
+    updateEpisode(episode: $episode) {
       id
       series
       title
@@ -17,15 +17,15 @@ const CREATE_EPISODE_MUTATION = gql`
   }
 `
 
-interface CreateEpisodeParams {
+interface UpdateEpisodeParams {
   episode: EpisodeDetails
 }
 
-export const createEpisode = async ({ episode }: CreateEpisodeParams) => {
+export const updateEpisode = async ({ episode }: UpdateEpisodeParams) => {
   const variables = { episode }
   const response = await graphqlClient.request<{
-    createEpisode: EpisodeDetails
-  }>(CREATE_EPISODE_MUTATION, variables)
+    updateEpisode: EpisodeDetails
+  }>(UPDATE_EPISODE_MUTATION, variables)
 
-  return response.createEpisode
+  return response.updateEpisode
 }
