@@ -1,13 +1,22 @@
+import { ModalProvider } from '@components'
 import { DetailsPage, SearchPage } from '@pages'
 import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <SearchPage />,
+    element: (
+      <ModalProvider>
+        <SearchPage />
+      </ModalProvider>
+    ),
   },
   {
     path: '/:id',
-    element: <DetailsPage />,
+    element: (
+      <ModalProvider>
+        <DetailsPage />
+      </ModalProvider>
+    ),
   },
 ])

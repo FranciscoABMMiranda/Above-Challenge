@@ -1,3 +1,5 @@
+export * from './createEpisode'
+export * from './deleteEpisode'
 export * from './getEpisodeDetails'
 export * from './getEpisodeList'
 export * from './getImdbDetails'
