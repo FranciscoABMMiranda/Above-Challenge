@@ -18,8 +18,8 @@ export const EpisodeCard: React.FC<EpisodeCard> = ({
   const handleViewDetails = () => navigate(id)
 
   return (
-    <div className="flex justify-between rounded-md border-2 border-slate-600 p-4 h-28">
-      <div className="flex flex-col flex-grow items-start text-left gap-y-2 max-w-[50%]">
+    <div className="flex flex-col md:flex-row justify-between rounded-md border-2 border-slate-600 p-4 md:h-28 gap-y-2">
+      <div className="flex flex-col flex-grow items-start text-left gap-y-2 md:max-w-[50%]">
         <Typography as="h3" className="text-lg font-bold line-clamp-1">
           {title}
         </Typography>
