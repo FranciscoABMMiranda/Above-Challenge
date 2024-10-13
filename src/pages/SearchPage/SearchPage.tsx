@@ -1,17 +1,34 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { Button, Input, Typography } from '@components'
+import { debounce } from '@utils'
+import { useState } from 'react'
 import { EpisodeList } from './components'
 
+const DEBOUNCE_TIMEOUT = 400
+
 export const SearchPage = () => {
+  const [search, setSearch] = useState('')
+
+  const handleSearch = debounce(setSearch, DEBOUNCE_TIMEOUT)
+
   return (
     <main className="flex flex-col items-stretch gap-8 sm:gap-12">
       <Typography as="h1" className="text-left">
-        Search for your favourite episodes
+        Check your favourite episodes!
       </Typography>
       <section className="flex flex-col sm:flex-row justify-between sm:items-end gap-y-3">
-        <Input label="Search" />
-        <Button>+ Create new episode</Button>
+        <Input
+          label="Search episodes"
+          isSearch
+          placeholder="Epsiode title"
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <Button>
+          <PlusCircleOutlined className="mr-2" />
+          Create new episode
+        </Button>
       </section>
-      <EpisodeList />
+      <EpisodeList search={search} />
     </main>
   )
 }
