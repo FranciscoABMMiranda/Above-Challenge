@@ -1,16 +1,9 @@
-import { StarFilled } from '@ant-design/icons'
-import {
-  SkeletonProvider,
-  SkeletonWrapper,
-  Typography,
-  useModal,
-} from '@components'
-import { useEpisodeDetails, useImdbDetails } from '@services'
+import { SkeletonProvider, SkeletonWrapper, useModal } from '@components'
+import { useEpisodeDetails, useImdbDetails, useUpdateEpisode } from '@services'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { EpisodeModal } from '../EpisodeForm'
-import { DetailsSkeleton, HeaderButtons, InfoText } from './components'
-import { getEpisodeInfo } from './utils'
+import { DetailsSkeleton, EpisodeInfo, HeaderButtons } from './components'
 
 export const DetailsPage: React.FC = () => {
   const { pathname } = useLocation()
@@ -34,49 +27,21 @@ export const DetailsPage: React.FC = () => {
     closeModal()
   }
 
+  const { mutate } = useUpdateEpisode({
+    onSuccess: handleUpdateSuccess,
+  })
+
   if (isError || isImdbError) return null
 
   return (
     <SkeletonProvider isLoading={isLoading || isImdbLoading}>
-      <EpisodeModal isEdit onSuccess={handleUpdateSuccess} />
+      <EpisodeModal isEdit onSubmitData={mutate} data={data} />
       <main className="flex flex-col items-start gap-y-6">
         <HeaderButtons episodeId={data?.id ?? ''} />
         <SkeletonWrapper component={<DetailsSkeleton />}>
-          <section className="flex flex-col md:flex-row justify-between items-start gap-y-4 gap-x-2 w-full">
-            <div className="flex flex-col gap-y-5 items-start">
-              <Typography as="h1">{data?.title}</Typography>
-              <Typography as="h2" className="text-2xl">
-                {`Series: ${data?.series}`}
-              </Typography>
-              <div className="flex flex-col gap-y-2 flex-wrap text-lg">
-                {getEpisodeInfo(data, imdbData).map(
-                  ({ label, value }, index) => (
-                    <InfoText
-                      key={`episode_info_${index}`}
-                      label={label}
-                      value={value}
-                    />
-                  ),
-                )}
-                <InfoText
-                  label="IMDB rating"
-                  value={
-                    <>
-                      {`${imdbData?.imdbRating}/10`}
-                      <StarFilled className="ml-1" />
-                    </>
-                  }
-                />
-              </div>
-            </div>
-            <img
-              className="w-full md:w-[40%]"
-              src={imdbData?.Poster}
-              alt={`Poster of the episode`}
-            />
-          </section>
-
-          <Typography>{data?.description}</Typography>
+          {data !== undefined && imdbData !== undefined && (
+            <EpisodeInfo data={data} imdbData={imdbData} />
+          )}
         </SkeletonWrapper>
       </main>
     </SkeletonProvider>

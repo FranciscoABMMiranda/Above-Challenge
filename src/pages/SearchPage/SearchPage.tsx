@@ -1,5 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Button, Input, Typography, useModal } from '@components'
+import { useCreateEpisode } from '@services'
 import { debounce } from '@utils'
 import { useState } from 'react'
 import { EpisodeModal } from '../EpisodeForm'
@@ -16,6 +17,8 @@ export const SearchPage = () => {
     alert('Episode created successfully!')
     closeModal()
   }
+
+  const { mutate } = useCreateEpisode({ onSuccess: handleCreateSuccess })
 
   return (
     <main className="flex flex-col items-stretch gap-8 sm:gap-12">
@@ -35,7 +38,7 @@ export const SearchPage = () => {
         </Button>
       </section>
       <EpisodeList search={search} />
-      <EpisodeModal onSuccess={handleCreateSuccess} />
+      <EpisodeModal onSubmitData={mutate} />
     </main>
   )
 }
