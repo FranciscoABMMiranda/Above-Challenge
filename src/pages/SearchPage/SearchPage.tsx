@@ -3,6 +3,7 @@ import { Button, Input, Typography, useModal } from '@components'
 import { useCreateEpisode } from '@services'
 import { debounce } from '@utils'
 import { useState } from 'react'
+import { useApollo } from '../../services/api/websocketApollo'
 import { EpisodeModal } from '../EpisodeForm'
 import { EpisodeList } from './components'
 
@@ -17,6 +18,8 @@ export const SearchPage = () => {
     alert('Episode created successfully!')
     closeModal()
   }
+  const { createData, deleteData, updateData } = useApollo()
+  console.log({ createData, deleteData, updateData })
 
   const { mutate } = useCreateEpisode({ onSuccess: handleCreateSuccess })
 
