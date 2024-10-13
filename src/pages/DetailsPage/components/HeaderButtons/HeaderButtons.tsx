@@ -21,7 +21,7 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({ episodeId }) => {
   const { mutate } = useDeleteEpisode({ onSuccess: onSuccessDelete })
 
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex flex-col md:flex-row justify-between w-full gap-3 items-start">
       <ConfirmationModal
         open={openConfirmationModal}
         title="Delete episode"
@@ -33,7 +33,7 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({ episodeId }) => {
         <LeftOutlined className="mr-2" />
         {'Go back to episode list'}
       </Button>
-      <div className="flex ml-2 gap-3">
+      <div className="flex gap-3">
         <Button
           className="text-sm"
           onClick={() => setOpenConfirmationModal(true)}>
